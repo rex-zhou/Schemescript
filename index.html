@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lispscript</title>
+    <style>
+      
+    </style>
+    <script>
+    function execute() {
+      var progarm = document.getElementById("inputcode").value;
+      var interProgarm = parse(progarm);
+      console.log(interProgarm);
+      var output = evalProgram(interProgarm, syntax());
+      document.getElementById("outputarea").innerHTML = output;
+    } 
+    
+    function parse(param) {
+      return parseToken(tokenize(param));
+    }
+    
+    function tokenize(param) {
+      return param.replace(/\(/g, ' ( ').replace(/\)/g, ' ) ').match(/\S+/g);
+    }
+    
+    function parseToken(tokens) {
+      if (tokens.length == 0) {
+        alert("Unexpected EOF while reading")
+      }
+      
+      var token = tokens.shift();
+      if (token == "(") {
+        var expression = [];
+        while (tokens[0] != ")") {
+          expression.push(parseToken(tokens))
+        }
+        tokens.shift();
+        return expression;
+      }
+      
+      else if (token == ")") {
+        alert("unexpected )");
+      }
+      
+      else {
+        return transform(token);
+      }
+      
+    }
+    
+    function transform(token) {
+      var result = parseInt(token);
+      if (isNaN(result)) {
+        result = parseFloat(token);
+        if (isNaN(result)) {
+          result = token.toString();
+        }
+      }
+      return result;
+    }
+    
+    function syntax() {
+      var syntaxMap = {
+        '+': function(arr) {
+          return arr.reduce((a, b) => a + b);
+        },
+        '-': function(arr) {
+          return arr.reduce((a, b) => a - b);
+        },
+        '*': function(arr) {
+          return arr.reduce((a, b) => a * b);
+        },
+        '/': function(arr) {
+          return arr.reduce((a, b) => a / b);
+        },
+        '>': function(arr) {
+          return arr.reduce((a, b) => a > b);
+        },
+        '<': function(arr) {
+          return arr.reduce((a, b) => a < b);
+        },
+        '>=': function(arr) {
+          return arr.reduce((a, b) => a >= b);
+        },
+        '<=': function(arr) {
+          return arr.reduce((a, b) => a <= b);
+        }
+      }
+      
+      return syntaxMap;  
+    }
+    
+    function evalProgram(param, syntax) {
+      if (typeof(param) == 'string') {
+        return syntax[param];
+      } else if (!(param instanceof Array)) {
+        return param;
+      } else {
+        var operator = evalProgram(param[0], syntax);
+        var args = param.slice(1);
+        console.log(args);
+        var i = 0;
+        for (; i < args.length; i++) {
+          args[i] = evalProgram(args[i], syntax);
+        }
+        return operator(args);
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div>
+      <h1>A simple scheme interpreter</h1>
+      <textarea id="inputcode" rows="10" cols="30">(* (+ 1 2) 3)</textarea>
+      <input type="button" class="button" onclick="execute()" value="Execute">
+    </div>
+    <div>
+      <a id="outputarea"></a>
+    </div>
+  </body>
+</html>
