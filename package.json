@@ -1,0 +1,27 @@
+{
+  "name": "schemescript",
+  "version": "1.0.0",
+  "description": "A font end scheme interpreter",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rex-zhou/Schemescript.git"
+  },
+  "keywords": [
+    "shceme",
+    "interpreter"
+  ],
+  "author": "rex zhou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rex-zhou/Schemescript/issues"
+  },
+  "homepage": "https://github.com/rex-zhou/Schemescript#readme",
+  "dependencies": {
+    "mocha":"2.3.4",
+    "chai":"3.4.1"
+  }
+}
