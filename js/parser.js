@@ -33,7 +33,12 @@
     }
   }
 
+  function parse(param) {
+    return parseToken(tokenize(param));
+  }
+
   exports.tokenize = tokenize;
   exports.readToken = readToken;
   exports.parseToken = parseToken;
+  exports.parse = parse;
 })(this);

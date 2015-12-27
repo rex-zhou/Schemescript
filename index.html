@@ -17,9 +17,21 @@
   <div>
     <a id="outputarea"></a>
   </div>
-  
+
   <script src="js/parser.js"></script>
-  <script src="js/script.js"></script>
+  <script src="js/eval.js"></script>
+  <script>
+    function execute() {
+      var progarm = document.getElementById("inputcode").value;
+      try {
+        var interProgarm = parse(progarm);
+        var output = evalProgram(interProgarm, syntax());
+        document.getElementById("outputarea").innerHTML = output; 
+      } catch (e) {
+        document.getElementById("outputarea").innerHTML = e; 
+      }
+    }
+  </script>
 </body>
 
 </html>
