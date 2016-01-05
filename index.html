@@ -24,8 +24,8 @@
     function execute() {
       var progarm = document.getElementById("inputcode").value;
       try {
-        var interProgarm = parse(progarm);
-        var output = evalProgram(interProgarm, syntax());
+        var expression = parse(progarm);
+        var output = evalProgram(expression);
         document.getElementById("outputarea").innerHTML = output; 
       } catch (e) {
         document.getElementById("outputarea").innerHTML = e; 
