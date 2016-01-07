@@ -86,5 +86,8 @@ describe('parser test', function () {
     it('parse (+ (+ 1 2) (+ 1 2))', function () {
       assert.deepEqual(parse('(+ (+ 1 2) (+ 1 2))'), ['+', ['+', 1, 2], ['+', 1, 2]]);
     });
+    it('parse (define (add a b) (+ a b))', function () {
+      assert.deepEqual(parse('(define (add a b) (+ a b))'), ['define', ['add', 'a', 'b'], ['+', 'a', 'b']]);
+    });
   });
 });

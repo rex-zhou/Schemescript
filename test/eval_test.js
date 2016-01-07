@@ -112,5 +112,9 @@ describe('eval test', function () {
       evalProgram(['define', 'val', 3]);
       assert.equal(symbolTable['val'], 3);
     });
+    it('test [define (add a b) (+ a b)] should works and (add 1 2) should return 3', function () {
+      evalProgram(['define', ['add', 'a', 'b'], ['+', 'a', 'b']]);
+      assert.equal(evalProgram(['add', 1, 2]), 3);
+    });
   });
 });

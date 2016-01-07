@@ -46,7 +46,14 @@
     } else if (!(expression instanceof Array)) {
       return expression;
     } else if (expression[0] == 'define') {
-      throw "define not support yet"
+      var procedure = expression[1];
+      if (isSelfEvaluating(procedure)) {
+        symbolTable[procedure] = expression.slice(2);
+      } else {
+        var subProcedure = procedure[0];
+        var operation = expression[2];
+        symbolTable[subProcedure] = symbolTable[operation[0]];
+      }
     } else {
       var operator = evalProgram(expression[0]);
       var args = expression.slice(1);
@@ -72,7 +79,7 @@
     }
     return false;
   }
-  
+
   exports.symbolTable = symbolTable;
   exports.evalProgram = evalProgram;
   exports.isSelfEvaluating = isSelfEvaluating;
