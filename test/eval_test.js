@@ -79,7 +79,7 @@ describe('eval test', function () {
       assert.equal(symbolTable['not'](0), true);
     });
   });
-  
+
   describe('isSelfEvaluating(expression)', function () {
     it('test 1 should return true', function () {
       assert.equal(isSelfEvaluating(1), true);
@@ -94,7 +94,7 @@ describe('eval test', function () {
       assert.equal(isSelfEvaluating({name:'rex', age:50}), false);
     });
   });
-  
+
   describe('evalProgram(expression)', function () {
     it('test [\'+\', 1, 2] should return 3', function () {
       assert.equal(evalProgram(['+', 1, 2]), 3);
@@ -108,13 +108,19 @@ describe('eval test', function () {
     it('test [\'>\', 1 , 2] should return false', function () {
       assert.equal(evalProgram(['>', 1, 2]), false)
     });
-    it('test [define val 3] should add val 3 in symbol table', function () {
+    it('test [define, val, 3] should add val 3 in symbol table', function () {
       evalProgram(['define', 'val', 3]);
       assert.equal(symbolTable['val'], 3);
     });
-    it('test [define (add a b) (+ a b)] should works and (add 1 2) should return 3', function () {
+    it('test [define, [add a b], [+ a b]] should works and (add 1 2) should return 3', function () {
       evalProgram(['define', ['add', 'a', 'b'], ['+', 'a', 'b']]);
       assert.equal(evalProgram(['add', 1, 2]), 3);
+    });
+    it('test [if, [> 3 5], 3, 5 ] should return 5', function () {
+      assert.equal(evalProgram(['if', ['>', 3, 5], 3, 5]), 5);
+    });
+    it('test [if, ture, 3, 5] should return 3', function () {
+      assert.equal(evalProgram(['if', true, 3, 5]), 3);
     });
   });
 });

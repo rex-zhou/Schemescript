@@ -54,6 +54,12 @@
         var operation = expression[2];
         symbolTable[subProcedure] = symbolTable[operation[0]];
       }
+    } else if (expression[0] == 'if'){
+      if (evalProgram(expression[1])) {
+        return evalProgram(expression[2]);
+      } else {
+        return evalProgram(expression[3]);
+      }
     } else {
       var operator = evalProgram(expression[0]);
       var args = expression.slice(1);
@@ -64,7 +70,7 @@
       return operator(args);
     }
   }
-  
+
   //Self evaluating just number and string
   function isSelfEvaluating(expression) {
     var result = parseFloat(expression);
